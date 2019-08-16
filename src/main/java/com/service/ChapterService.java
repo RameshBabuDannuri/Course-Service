@@ -100,4 +100,12 @@ public class ChapterService {
         videoService.deleteVideo(video);
 
     }
+
+    public Section getSectionById(Long sectionId) {
+        Section section = sectionService.getSectionById(sectionId);
+        if (section == null){
+            throw new ResourceNotFoundException("Section with id "+sectionId+" not exist");
+        }
+        return section;
+    }
 }

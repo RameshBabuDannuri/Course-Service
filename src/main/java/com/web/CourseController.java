@@ -23,22 +23,19 @@ import java.util.Set;
 
 
 @RestController
-@RequestMapping("/courses")
 public class CourseController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private CourseService courseService;
-
     @Autowired
     private ChapterService chapterService;
-    @Autowired
-    private  SectionService sectionService;
+
 
     @Autowired
     private ValidationErrorService validationErrorService;
 
-    @PostMapping("")
+    @PostMapping("/courses")
     public ResponseEntity<?> createCourse(@Valid  @RequestBody Course course, BindingResult result){
 
         ResponseEntity<?> hasErrors = validationErrorService.mapValidationService(result);
@@ -49,7 +46,7 @@ public class CourseController {
         return new ResponseEntity<>(courseService.save(course), HttpStatus.CREATED);
 
     }
-    @PutMapping("")
+    @PutMapping("/courses")
     public ResponseEntity<?> updateCourse(@Valid @RequestBody Course course , BindingResult result){
         ResponseEntity<?> hasErrors = validationErrorService.mapValidationService(result);
         if (hasErrors != null){
@@ -58,29 +55,29 @@ public class CourseController {
         course.setCourseName(course.getCourseName().toUpperCase());
         return new ResponseEntity<>(courseService.updateCourse(course), HttpStatus.OK);
     }
-    @DeleteMapping("/{courseId}")
+    @DeleteMapping("/courses/{courseId}")
     public ResponseEntity<?> deleteCourse(@PathVariable Long courseId){
         courseService.deleteCourse(courseId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping("")
+    @GetMapping("/courses")
     public ResponseEntity<List<Course>> getAllCourses(){
         return new ResponseEntity<>( courseService.getAll() , HttpStatus.OK);
     }
-    @GetMapping("/{courseName}")
+    @GetMapping("/courses/{courseName}")
     public ResponseEntity<List<Course>> getCourseByName(@PathVariable String courseName){
         return new ResponseEntity<>( courseService.findByName(courseName)  ,HttpStatus.OK);
     }
 
     // Chapter APIs
 
-    @PostMapping("/{courseId}/chapters")
+    @PostMapping("/courses/{courseId}/chapters")
     public ResponseEntity<?> addChaptersToCourse(@PathVariable Long courseId , @RequestBody Set<Chapter> chapters){
        Course course =   courseService.addChapters(courseId , chapters);
 
        return new ResponseEntity<>(course , HttpStatus.CREATED);
     }
-    @PostMapping("/{courseId}/chapter")
+    @PostMapping("/courses/{courseId}/chapter")
     public ResponseEntity<?> addChapterToCourse(
             @PathVariable Long courseId , @Valid @RequestBody Chapter chapter,BindingResult result){
         ResponseEntity<?> hasErrors = validationErrorService.mapValidationService(result);
@@ -91,31 +88,31 @@ public class CourseController {
 
         return new ResponseEntity<>(course , HttpStatus.CREATED);
     }
-    @PutMapping("/chapters")
+    @PutMapping("/courses/chapters")
     public ResponseEntity<?> updateChapter(@Valid @RequestBody Chapter chapter , BindingResult result){
         Chapter chapter1 = courseService.updateChapter(chapter);
         return new ResponseEntity(chapter1 , HttpStatus.OK);
     }
-    @DeleteMapping("/chapters/{chapterId}")
+    @DeleteMapping("/courses/chapters/{chapterId}")
     public ResponseEntity<?> deleteChapter(@PathVariable Long chapterId){
         Chapter chapter = courseService.deleteChapter(chapterId);
         return new ResponseEntity(HttpStatus.OK);
     }
-    @GetMapping("/{courseId}/chapters")
+    @GetMapping("courses/{courseId}/chapters")
     public ResponseEntity<?> getChaptersByCourse(@PathVariable Long courseId){
         return new ResponseEntity<>(courseService.getChaptersByCourseID(courseId), HttpStatus.OK);
     }
 
     //=======>  Section APIs <===========
 
-    @PostMapping("/{chapterId}/sections")
+    @PostMapping("/chapters/{chapterId}/sections")
     public ResponseEntity<?> addSectionsToChapter(@PathVariable Long chapterId ,List<Section> sections){
        Chapter chapter = chapterService.getChapterById(chapterId);
        Chapter chapter1 = chapterService.addSectionsToChapter(chapter , sections);
         return new ResponseEntity<>(chapter1 , HttpStatus.CREATED);
 
     }
-    @PostMapping("/{chapterId}/section")
+    @PostMapping("/chapters/{chapterId}/section")
     public ResponseEntity<?> addSectionToChapter(
             @PathVariable Long chapterId ,@Valid @RequestBody Section section,BindingResult result){
         Chapter chapter = chapterService.getChapterById(chapterId);
@@ -148,9 +145,9 @@ public class CourseController {
     }
     //====> Video Apis <=====
 
-    @PostMapping("/{sectionId}/videos")
+    @PostMapping("/sections/{sectionId}/videos")
     public ResponseEntity<?> addVideosToSection(@PathVariable Long sectionId ,List<Video> videos){
-        Section section = sectionService.getSectionById(sectionId);
+        Section section = chapterService.getSectionById(sectionId);
         Section section1 = chapterService.addVideosToSection(section , videos);
         return new ResponseEntity<>(section1 , HttpStatus.CREATED);
 
