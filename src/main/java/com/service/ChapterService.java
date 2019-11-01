@@ -33,20 +33,9 @@ public class ChapterService {
         return chapter;
     }
 
-    public Chapter addSectionsToChapter(Chapter chapter, List<Section> sections) {
-        for (Section section: sections
-        ) {
-            chapter.addSection(section);
-            sectionService.save(section);
-        }
-        return chapter;
-    }
 
-    public Chapter addSectionToChapter(Chapter chapter, Section section) {
-        chapter.addSection(section);
-        Section section1 =  sectionService.save(section);
-        return chapter;
-    }
+
+
     public Section updateSection(Section section) {
         Section section1 = sectionService.getSectionById(section.getId());
         if (section1==null){
@@ -73,39 +62,7 @@ public class ChapterService {
     }
 
 
-    public Section addVideosToSection(Section section, List<Video> videos) {
-        for (Video video:videos
-             ) {
-            section.addVideos(video);
-             videoService.save(video);
-        }
-        return section;
-    }
 
-    public Video updateVideo(Video video) {
-      Video video1 = videoService.getVideoById(video.getId());
-        if (video1==null){
-            throw new ResourceNotFoundException("Video with id "+video.getId()+" not exist");
 
-        }
-       video1 = videoService.save(video);
-        return video1;
-    }
 
-    public void deleteVideo(Long videoId) {
-        Video video = videoService.getVideoById(videoId);
-        if (video == null){
-            throw new ResourceNotFoundException("Video with id "+videoId+" not exist");
-        }
-        videoService.deleteVideo(video);
-
-    }
-
-    public Section getSectionById(Long sectionId) {
-        Section section = sectionService.getSectionById(sectionId);
-        if (section == null){
-            throw new ResourceNotFoundException("Section with id "+sectionId+" not exist");
-        }
-        return section;
-    }
 }

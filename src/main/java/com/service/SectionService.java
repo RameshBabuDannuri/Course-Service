@@ -1,6 +1,7 @@
 package com.service;
 
 import com.exceptions.ResourceNotFoundException;
+import com.model.Chapter;
 import com.model.Section;
 import com.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,15 @@ public class SectionService {
 
     public Section save(Section section) {
        return sectionRepository.save(section);
+    }
+
+    public Chapter addSectionsToChapter(Chapter chapter, List<Section> sections) {
+        for (Section section: sections
+        ) {
+            chapter.addSection(section);
+            sectionRepository.save(section);
+        }
+        return chapter;
     }
 
     public Section getSectionById(Long id) {
@@ -32,5 +42,11 @@ public class SectionService {
 
     public void deleteSection(Section section) {
         sectionRepository.delete(section);
+    }
+
+    public Chapter addSectionToChapter(Chapter chapter, Section section) {
+        chapter.addSection(section);
+        sectionRepository.save(section);
+        return chapter;
     }
 }

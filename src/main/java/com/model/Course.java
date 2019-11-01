@@ -27,7 +27,7 @@ public class Course {
     private boolean isActive;
 
     @OneToMany(cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true , fetch = FetchType.LAZY)
             @JoinColumn(name = "course_id")
     Set<Chapter> chapters;
 
