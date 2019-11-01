@@ -35,7 +35,8 @@ public class CourseController {
         logger.info("get all course method is started");
         List<Course> courses =    courseService.getAll();
         logger.info(courses.toString());
-        return new ResponseEntity<>(courses,HttpStatus.OK);
+        return new ResponseEntity<>(courses,
+                HttpStatus.OK);
     }
     @GetMapping("/courses/{name}")
     public ResponseEntity<List<Course>> getCourseByName(@PathVariable String name){
