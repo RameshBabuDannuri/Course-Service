@@ -68,5 +68,6 @@ public class CourseController {
         courseService.deleteCourse(courseId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    // welcome to course version -------------------
 
 }
