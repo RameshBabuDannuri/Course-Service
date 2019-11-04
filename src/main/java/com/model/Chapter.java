@@ -23,7 +23,7 @@ public class Chapter {
     @JsonIgnore
     private Course course;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "chapter_id")
     List<Section> sections;
 

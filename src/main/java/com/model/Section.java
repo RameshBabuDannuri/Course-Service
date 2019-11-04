@@ -19,6 +19,7 @@ public class Section {
     private String description;
 
     @ManyToOne
+    @JsonIgnore
     private Chapter chapter;
 
     @OneToMany(cascade = CascadeType.ALL ,orphanRemoval = true)

@@ -48,17 +48,17 @@ public class SectionController {
         if(hasErrors != null){
             return hasErrors;
         }
-        Section section1 = chapterService.updateSection(section);
+        Section section1 = sectionService.updateSection(section);
         return new ResponseEntity<>(section1 , HttpStatus.CREATED);
     }
     @DeleteMapping("/sections/{sectionId}")
     public ResponseEntity<?> deleteSection(@PathVariable Long sectionId){
-        chapterService.deleteSection(sectionId);
+        sectionService.deleteSection(sectionId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/chapters/{chapterId}/sections")
     public ResponseEntity<List<Section>> getSectionsByChapterId(@PathVariable Long chapterId){
-        List<Section> sections = chapterService.getSectionsByChapterId(chapterId);
+        List<Section> sections = sectionService.getSectionsByChapterId(chapterId);
         return new ResponseEntity<>(sections , HttpStatus.OK);
     }
 }
