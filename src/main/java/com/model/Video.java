@@ -1,13 +1,10 @@
 package com.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.stereotype.Service;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Time;
-import java.util.Timer;
 
 @Entity
 public class Video {
